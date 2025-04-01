@@ -5,19 +5,23 @@ declare(strict_types=1);
 namespace Tests;
 
 use PHPUnit\Framework\TestCase;
-use swkberlin\Kata;
+use swkberlin\Account;
 
 class KataTest extends TestCase
 {
-    public function testDummy(): void
+    public function testDeposit(): void
     {
-        $kata = new Kata();
-        $this->assertInstanceOf(Kata::class, $kata);
-        $this->assertTrue(false);
-    }
+        $account = new Account();
+        $this->assertInstanceOf(Account::class, $account);
+        $account->deposit(1000);
 
-    public function testNotFailing(): void
-    {
-        $this->assertTrue(true);
+        ob_start();
+        $account->printStatement();
+        $output = ob_get_clean();
+        $expected = <<<EOT
+Date       || Amount || Balance
+10/01/2012 || 1000   || 1000
+EOT;
+        $this->assertEquals($expected, $output);
     }
 }

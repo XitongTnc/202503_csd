@@ -34,15 +34,20 @@ class Account implements AccountService
     {
         echo "Date       || Amount || Balance\n";
         $balance = 0;
+        $lines = [];
 
-        foreach (array_reverse($this->transactions) as $tx) {
+
+        foreach ($this->transactions as $tx) {
             $balance += $tx['amount'];
-            printf(
-                "%s || %s   || %d\n",
+            $lines[] = sprintf(
+                "%s || %s  || %d",
                 $tx['date'],
                 $tx['amount'],
                 $balance
             );
+        }
+        foreach (array_reverse($lines) as $line) {
+            echo $line . "\n";
         }
     }
 }
